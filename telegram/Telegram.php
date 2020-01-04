@@ -1,6 +1,6 @@
 <?php
 
-namespace elwahab\telegram;
+namespace elwahab\telegram\telegram;
 
 class Telegram
 {
