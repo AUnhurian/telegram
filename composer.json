@@ -10,7 +10,7 @@
         }
     ],
     "autoload": {
-        "psr-4": {"elwahab\\": "src/"}
+        "psr-4": {"ELWAHAB\\": "src/"}
     },
     "require": {}
 }
