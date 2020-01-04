@@ -6,7 +6,8 @@
     "authors": [
         {
             "name": "Andrii Unhurian",
-            "email": "andriy.unhurian@ukr.net"
+            "email": "andriy.unhurian@ukr.net",
+            "role" : "Lead Developer"
         }
     ],
     "autoload": {
