@@ -1,0 +1,17 @@
+{
+    "name": "elwahab/telegram",
+    "description": "For telegram bot package",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrii Unhurian",
+            "email": "andriy.unhurian@ukr.net"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {"elwahab\\telegram\\": "src/"}
+    },
+    "require": {}
+}
