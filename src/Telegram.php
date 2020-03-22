@@ -172,6 +172,26 @@ class Telegram extends BaseTelegram
 
         return $result;
     }
+    
+    
+    /**
+     * The function sends any method to the telegram for processing
+     *
+     * @param    typeMethod string
+     * @param    params array with params for Telegram API
+     * @return    result json result from Telegram API
+     * @author    Andrii_Unhurian
+     */
+    public function methodType($typeMethod = 'sendMessage', $params)
+    {
+        $baseURL = $this->base_url . $this->token .'/';
+        $baseURL .= $typeMethod;
+
+        $url = $baseURL. '?'. http_build_query($params);
+
+        $result = $this->curlQuery($url);
+        return $result;
+    }
 
     /**
      * Function for answer callback query || maybe, no effective
