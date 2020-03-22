@@ -15,7 +15,7 @@ class BaseTelegram
      * @return    result json result from Telegram API
      * @author    Andrii_Unhurian
      */
-    protected function methodType($typeMethod = 'sendMessage', $params)
+    public function methodType($typeMethod = 'sendMessage', $params)
     {
         $baseURL = $this->base_url . $this->token .'/';
         $baseURL .= $typeMethod;
