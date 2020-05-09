@@ -6,6 +6,7 @@ use ELWAHAB\BaseTelegram;
 
 class Telegram extends BaseTelegram
 {
+    public $InlineKeyboardButton = null;
 
     public function __construct($token)
     {
@@ -172,8 +173,8 @@ class Telegram extends BaseTelegram
 
         return $result;
     }
-    
-    
+
+
     /**
      * The function sends any method to the telegram for processing
      *
@@ -209,6 +210,84 @@ class Telegram extends BaseTelegram
         return $result;
     }
 
+    /**
+    * Method for make InlineKeyboardMarkup
+    */
+    public function getInlineKeyboardMarkup($data)
+    {
+        $InlineKeyboardButton = array();
 
+        $InlineKeyboardButton[] = $data;
+        if (!empty($this->InlineKeyboardButton)) {
+            $InlineKeyboardButton = $this->InlineKeyboardButton;
+        }
+
+        $InlineKeyboardMarkup = [
+            'inline_keyboard' => $InlineKeyboardButton
+        ];
+
+        return json_encode($InlineKeyboardMarkup);
+    }
+
+    /**
+    * Key in json `photo` as assoc array
+    * @param    array photos this is key
+    * @return   array
+    */
+    public function getUrlImage($photos)
+    {
+        $api_files = 'https://api.telegram.org/file/bot'. $this->token .'/';
+        $api = 'https://api.telegram.org/bot'. $this->token .'/';
+
+        try {
+            if (empty($photos)) {
+                throw new \Exception('Sorry, but I get empty array `photos`');
+            }
+
+            $photo = $photos[1];
+            if (empty($photo)) {
+                throw new \Exception('Exception with array photo. I think, we have only first photo.');
+            }
+
+            $file_id = $photo['file_id'];
+            if (empty($file_id)) {
+                throw new \Exception('File id empty.');
+            }
+
+            $file_size = $photo['file_size'];
+            if (empty($file_size)) {
+                throw new \Exception('File size empty.');
+            }
+
+            $url = $api . 'getFile?file_id=' . $file_id;
+            $path_file = file_get_contents($url);
+
+            if (empty($path_file)) {
+                throw new \Exception('Empty path to file.');
+            }
+
+            $path_file = json_decode($path_file, true);
+            if (empty($path_file['result']) || empty($path_file['result']['file_path'])) {
+                throw new \Exception('I have exception with getting path to image.');
+            }
+
+            $file_path = $path_file['result']['file_path'];
+            $image_url = $api_files . $file_path;
+
+            $response = [
+                'result' => true,
+                'message' => 'All good',
+                'url' => $image_url
+            ];
+
+        } catch(\Exception $exception) {
+            $response = [
+                'result' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
+
+        return $response;
+    }
 
 }

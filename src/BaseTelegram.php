@@ -20,7 +20,7 @@ class BaseTelegram
         $baseURL = $this->base_url . $this->token .'/';
         $baseURL .= $typeMethod;
 
-        $url = $baseURL. '?'. http_build_query($params);
+        $url = $baseURL . '?'. http_build_query($params);
 
         $result = $this->curlQuery($url);
         return $result;
@@ -37,7 +37,8 @@ class BaseTelegram
      * @return    content string
      * @author    Andrii_Unhurian
      */
-    protected function curlQuery($url, $header = false, $fields = null, $typePOST = 'http', $cookieFile = 'cookie.txt'){
+    protected function curlQuery($url, $header = false, $fields = null, $typePOST = 'http', $cookieFile = 'cookie.txt')
+    {
     	$curl = curl_init();
 
     	$option = [
@@ -66,6 +67,33 @@ class BaseTelegram
     	curl_close($curl);
 
     	return $content;
+    }
+
+    /**
+     * Function for getting value in assoc array by key
+     *
+     * @param data array
+     * @param keyData string
+     * @return    array, string
+     * @author    Andrii_Unhurian
+     */
+    public function searchKey($data, $keyData)
+    {
+        if (!is_null($data)) {
+            foreach ($data as $key => $value) {
+                if ($keyData === $key) {
+                    return $value;
+                } elseif (is_array($value)) {
+                    $result = $this->searchKey($value, $keyData);
+
+                    if (!is_null($result)) {
+                        return $result;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
 }
